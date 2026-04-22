@@ -4,6 +4,12 @@ import { useCounter } from '../../../state/useCounter'
 import { useT, type AppLang, type DictKey } from '../../../i18n'
 import './FooterStats.css'
 
+// Module-level guard: ensures we fire `hit('visits')` exactly once per page
+// load, even when React 18's StrictMode intentionally double-invokes effects
+// in development. On a real page reload the whole JS module re-loads, so this
+// flag resets naturally — reload still = +1 visit as the user expects.
+let visitsHitOnce = false
+
 function formatNumber(n: number, lang: AppLang): string {
   const formatter = new Intl.NumberFormat(lang === 'ru' ? 'ru-RU' : 'en-US')
   return formatter.format(Math.max(0, Math.floor(n)))
@@ -45,11 +51,14 @@ export function FooterStats() {
   const gradients = useCounter('gradients')
   const copies = useCounter('copies')
 
-  // On every page load, increment visits counter by one.
-  // Gradients and copies are action-driven (incremented when user clicks),
-  // so we just read their current values here.
+  // On every page load, increment visits by one (with a guard so StrictMode's
+  // intentional double-mount in dev doesn't inflate the count to +2).
+  // Gradients and copies are action-driven, so here we just read them.
   useEffect(() => {
-    void counterService.hit('visits')
+    if (!visitsHitOnce) {
+      visitsHitOnce = true
+      void counterService.hit('visits')
+    }
     void counterService.read('gradients')
     void counterService.read('copies')
   }, [])
