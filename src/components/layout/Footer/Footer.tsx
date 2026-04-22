@@ -72,6 +72,42 @@ function FooterLogo() {
   )
 }
 
+function PickaxeIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      fill="currentColor"
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+    >
+      <rect x="14" y="4"  width="2" height="2" />
+      <rect x="16" y="4"  width="2" height="2" />
+      <rect x="18" y="4"  width="2" height="2" />
+      <rect x="12" y="6"  width="2" height="2" />
+      <rect x="14" y="6"  width="2" height="2" />
+      <rect x="16" y="6"  width="2" height="2" />
+      <rect x="18" y="6"  width="2" height="2" />
+      <rect x="20" y="6"  width="2" height="2" />
+      <rect x="10" y="8"  width="2" height="2" />
+      <rect x="12" y="8"  width="2" height="2" />
+      <rect x="14" y="8"  width="2" height="2" />
+      <rect x="16" y="8"  width="2" height="2" />
+      <rect x="10" y="10" width="2" height="2" />
+      <rect x="12" y="10" width="2" height="2" />
+      <rect x="8"  y="12" width="2" height="2" />
+      <rect x="10" y="12" width="2" height="2" />
+      <rect x="6"  y="14" width="2" height="2" />
+      <rect x="8"  y="14" width="2" height="2" />
+      <rect x="4"  y="16" width="2" height="2" />
+      <rect x="6"  y="16" width="2" height="2" />
+      <rect x="2"  y="18" width="2" height="2" />
+      <rect x="4"  y="18" width="2" height="2" />
+    </svg>
+  )
+}
+
 export function Footer() {
   const { t } = useT()
   const year = new Date().getFullYear()
@@ -92,33 +128,30 @@ export function Footer() {
           <p className="footer__made-by">{t('footer.madeBy')}</p>
         </section>
 
-        <section className="footer__col">
-          <h3 className="footer__heading">{t('footer.sectionLinks')}</h3>
-          <ul className="footer__links">
-            <li>
-              <a href={LINKS.about} target="_blank" rel="noopener noreferrer">
-                {t('footer.about')}
-              </a>
-            </li>
-            <li>
-              <a href={LINKS.contacts} target="_blank" rel="noopener noreferrer">
-                {t('footer.contacts')}
-              </a>
-            </li>
-            <li>
-              <a href={LINKS.privacy} target="_blank" rel="noopener noreferrer">
-                {t('footer.privacy')}
-              </a>
-            </li>
-            <li>
-              <a href={LINKS.parent} target="_blank" rel="noopener noreferrer">
-                kyynet.net ↗
-              </a>
-            </li>
-          </ul>
+        <section className="footer__col footer__col--play">
+          <h3 className="footer__heading">{t('footer.sectionPlay')}</h3>
+          <a
+            href={LINKS.play}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer__play-card"
+          >
+            <span className="footer__play-icon">
+              <PickaxeIcon />
+            </span>
+            <span className="footer__play-body">
+              <span className="footer__play-label">
+                {t('footer.playServerLabel')}
+              </span>
+              <span className="footer__play-ip">
+                {t('footer.playServerIp')}
+              </span>
+            </span>
+            <span className="footer__play-arrow" aria-hidden="true">→</span>
+          </a>
         </section>
 
-        <section className="footer__col">
+        <section className="footer__col footer__col--social">
           <h3 className="footer__heading">{t('footer.sectionSocial')}</h3>
           <div className="footer__social">
             {SOCIAL_ICONS.map(icon => (

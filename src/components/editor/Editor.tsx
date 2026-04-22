@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Gradient, GradientStop, Segment, StyleFlags } from '../../engine/types'
+import type { ImportResult } from '../../engine/import'
 import { useT } from '../../i18n'
 import { TextInput, type TextInputHandle } from './TextInput/TextInput'
 import { ColorPalette } from './ColorPalette'
 import { StyleToolbar } from './StyleToolbar'
 import { HexColorPicker } from './HexColorPicker'
-import { GradientBuilder } from './GradientBuilder/GradientBuilder'
+import { GradientBuilder, type GradientBuilderHandle } from './GradientBuilder/GradientBuilder'
 import { ImportModal } from './ImportModal/ImportModal'
 import { copyToClipboard } from '../../utils/clipboard'
 import { toastBus } from '../feedback/bus'
@@ -45,6 +46,7 @@ export function Editor({
   canRedo,
 }: Props) {
   const inputRef = useRef<TextInputHandle>(null)
+  const gradientBuilderRef = useRef<GradientBuilderHandle>(null)
   const { t } = useT()
   const [, setSelTick] = useState(0)
   const [importOpen, setImportOpen] = useState(false)
@@ -86,8 +88,16 @@ export function Editor({
     inputRef.current?.focus()
   }
 
-  const handleImport = (imported: Segment[]) => {
-    replaceSegments(imported, {})
+  const handleImport = (result: ImportResult) => {
+    replaceSegments(result.segments, result.gradients)
+    // If the imported content contained a gradient, load its stops into the
+    // gradient builder so it can be edited as a unit.
+    if (result.lastGradientStops && result.lastGradientStops.length >= 2) {
+      // Wait one tick so the builder is mounted / state updates flush first
+      setTimeout(() => {
+        gradientBuilderRef.current?.loadStops(result.lastGradientStops!)
+      }, 0)
+    }
     setTimeout(() => inputRef.current?.focus(), 50)
   }
 
@@ -221,6 +231,7 @@ export function Editor({
         <div className="editor__tool-block editor__tool-block--gradient">
           <h3>{t('editor.gradientHeading')}</h3>
           <GradientBuilder
+            ref={gradientBuilderRef}
             onApply={onGradientApply}
             onFlatten={clearAllFormatting}
             canFlatten={hasGradients}

@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { importFromCode } from '../../../engine/import'
-import type { Segment } from '../../../engine/types'
+import { importFromCode, type ImportResult } from '../../../engine/import'
 import { useT } from '../../../i18n'
 import './ImportModal.css'
 
 type Props = {
   open: boolean
   onClose(): void
-  onImport(segments: Segment[]): void
+  onImport(result: ImportResult): void
 }
 
 export function ImportModal({ open, onClose, onImport }: Props) {
@@ -48,12 +47,12 @@ export function ImportModal({ open, onClose, onImport }: Props) {
       return
     }
     try {
-      const segs = importFromCode(trimmed)
-      if (segs.length === 0) {
+      const result = importFromCode(trimmed)
+      if (result.segments.length === 0) {
         setError(t('editor.importError'))
         return
       }
-      onImport(segs)
+      onImport(result)
       onClose()
     } catch {
       setError(t('editor.importError'))

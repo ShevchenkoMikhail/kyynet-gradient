@@ -1,6 +1,8 @@
 import {
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -48,7 +50,15 @@ type Props = {
   canFlatten: boolean
 }
 
-export function GradientBuilder({ onApply, onFlatten, canFlatten }: Props) {
+export type GradientBuilderHandle = {
+  /** Load external stops into the builder (e.g. from an imported gradient). */
+  loadStops(stops: GradientStop[]): void
+}
+
+export const GradientBuilder = forwardRef<GradientBuilderHandle, Props>(function GradientBuilder(
+  { onApply, onFlatten, canFlatten },
+  ref,
+) {
   const { t } = useT()
   const [stops, setStops] = useState<GradientStop[]>(() => makeInitialStops())
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -202,6 +212,21 @@ export function GradientBuilder({ onApply, onFlatten, canFlatten }: Props) {
     setActiveId(null)
   }
 
+  useImperativeHandle(ref, () => ({
+    loadStops(externalStops: GradientStop[]) {
+      if (!externalStops || externalStops.length < MIN_GRADIENT_STOPS) return
+      const clampedCount = Math.min(externalStops.length, MAX_GRADIENT_STOPS)
+      setStops(
+        externalStops.slice(0, clampedCount).map(s => ({
+          id: makeStopId(),
+          position: Math.max(0, Math.min(1, s.position)),
+          color: s.color,
+        })),
+      )
+      setActiveId(null)
+    },
+  }), [])
+
   // Preview-only quick overview — 5 colors from the gradient
   const quickPreview = useMemo(() => colorsForN(stops, 5), [stops])
 
@@ -312,7 +337,7 @@ export function GradientBuilder({ onApply, onFlatten, canFlatten }: Props) {
       </div>
     </div>
   )
-}
+})
 
 type StopPopoverProps = {
   stop: GradientStop

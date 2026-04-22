@@ -125,20 +125,6 @@
     0 0 14px var(--kn-accent-glow);
 }
 
-.preview__scene-btn--active::after {
-  /* tiny check indicator fades in on active */
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--kn-accent);
-  box-shadow: 0 0 6px var(--kn-accent-glow);
-  animation: kn-fade-in 240ms ease both;
-}
 
 /* ===== Panel ===== */
 .preview__panel {
