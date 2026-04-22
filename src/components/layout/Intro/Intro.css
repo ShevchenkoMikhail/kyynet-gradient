@@ -1,0 +1,225 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--kn-space-5);
+  padding: var(--kn-space-10) var(--kn-space-4) var(--kn-space-8);
+  position: relative;
+}
+
+.intro__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--kn-space-2);
+  margin: 0;
+  line-height: 1;
+}
+
+.intro__title-line {
+  font-family: var(--kn-font-mc);
+  font-weight: 400;
+  font-size: clamp(48px, 11vw, 120px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  position: relative;
+  display: inline-flex;
+}
+
+/* =============================================================
+   "KyyNet" — white pixel word with pulsing solar-ray halo
+   ============================================================= */
+.intro__title-line--mono {
+  padding: 0.2em 0.4em;
+  isolation: isolate;
+}
+
+.intro__title-line-kyy {
+  position: relative;
+  color: #ffffff;
+  text-shadow:
+    0.08em 0.08em 0 rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(168, 85, 247, 0.35),
+    0 0 60px rgba(168, 85, 247, 0.15);
+  z-index: 1;
+  animation: kyy-breath 7s ease-in-out infinite;
+}
+
+/* Layered radial glows — breathing sun rays */
+.intro__title-line-glow {
+  position: absolute;
+  inset: -30% -15%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 60% 70% at 50% 50%,
+    rgba(168, 85, 247, 0.45) 0%,
+    rgba(168, 85, 247, 0.18) 25%,
+    transparent 55%
+  );
+  filter: blur(12px);
+  animation: glow-pulse 5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.intro__title-line-glow--b {
+  inset: -45% -25%;
+  background: radial-gradient(
+    ellipse 70% 80% at 30% 50%,
+    rgba(124, 58, 237, 0.35) 0%,
+    transparent 55%
+  );
+  animation: glow-pulse 8s ease-in-out infinite;
+  animation-delay: -2s;
+  filter: blur(24px);
+}
+
+.intro__title-line-glow--c {
+  inset: -60% -40%;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(192, 132, 252, 0.18) 45deg,
+      transparent 90deg,
+      transparent 180deg,
+      rgba(168, 85, 247, 0.14) 225deg,
+      transparent 270deg,
+      transparent 360deg
+    );
+  filter: blur(30px);
+  animation: glow-rotate 24s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.92); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+@keyframes glow-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes kyy-breath {
+  0%, 100% {
+    text-shadow:
+      0.08em 0.08em 0 rgba(0, 0, 0, 0.55),
+      0 0 30px rgba(168, 85, 247, 0.35),
+      0 0 60px rgba(168, 85, 247, 0.15);
+  }
+  50% {
+    text-shadow:
+      0.08em 0.08em 0 rgba(0, 0, 0, 0.55),
+      0 0 48px rgba(168, 85, 247, 0.6),
+      0 0 100px rgba(168, 85, 247, 0.3);
+  }
+}
+
+/* =============================================================
+   "Gradient" — per-letter rainbow with breath + metallic flash
+   ============================================================= */
+.intro__title-line--rainbow {
+  padding: 0.1em 0.2em;
+  isolation: isolate;
+}
+
+.gradient-letter {
+  position: relative;
+  display: inline-block;
+  animation: gradient-breath 6.5s cubic-bezier(0.45, 0, 0.35, 1) infinite;
+  animation-delay: calc(var(--i, 0) * 0.45s);
+  transform-origin: center 60%;
+  will-change: transform;
+}
+
+.gradient-letter__base {
+  background: linear-gradient(
+    90deg,
+    #ff4d4d 0%,
+    #ff993a 16%,
+    #ffdd33 34%,
+    #3ddb66 54%,
+    #3aa1ff 76%,
+    #b265ff 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0.08em 0.08em 0 rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 28px rgba(255, 140, 220, 0.22));
+}
+
+.gradient-letter__flash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffffff;
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.95),
+    0 0 18px rgba(255, 255, 255, 0.7),
+    0.08em 0.08em 0 rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  animation: gradient-flash 9s steps(40) infinite;
+  animation-delay: calc(var(--i, 0) * 0.22s + 1.2s);
+  animation-timing-function: linear;
+}
+
+@keyframes gradient-breath {
+  0%, 72%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1.09);
+    filter: brightness(1.08);
+  }
+}
+
+@keyframes gradient-flash {
+  0%, 88%, 100% { opacity: 0; }
+  92%           { opacity: 1; }
+  94%           { opacity: 0.85; }
+  96%           { opacity: 0; }
+}
+
+.intro__subtitle {
+  font-size: var(--kn-fs-md);
+  color: var(--kn-text-muted);
+  max-width: 640px;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0 var(--kn-space-4);
+}
+
+@media (max-width: 640px) {
+  .intro {
+    padding: var(--kn-space-8) var(--kn-space-4) var(--kn-space-5);
+    gap: var(--kn-space-4);
+  }
+  .intro__title {
+    gap: 4px;
+  }
+  .intro__title-line {
+    font-size: clamp(42px, 16vw, 76px);
+    letter-spacing: 0.02em;
+  }
+  .intro__subtitle {
+    font-size: var(--kn-fs-base);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__title-line-glow,
+  .intro__title-line-kyy,
+  .gradient-letter,
+  .gradient-letter__flash {
+    animation: none;
+  }
+  .gradient-letter__flash { display: none; }
+}

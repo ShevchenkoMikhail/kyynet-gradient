@@ -1,0 +1,5 @@
+export const SERVICE_NAME = 'KyyNet Gradient'
+export const SERVICE_TAGLINE_KEY = 'intro.subtitle'
+export const PARENT_PROJECT = 'KyyNet'
+export const PARENT_PROJECT_URL = 'https://kyynet.net'
+export const PARENT_PLAY_URL = 'https://play.kyynet.net'

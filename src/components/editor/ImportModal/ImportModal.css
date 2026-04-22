@@ -1,0 +1,139 @@
+.import-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--kn-z-popover);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--kn-space-4);
+  animation: kn-fade-in 180ms ease both;
+}
+
+.import-modal {
+  width: min(560px, 100%);
+  background: var(--kn-bg-elev-2);
+  border: 1px solid var(--kn-panel-border-strong);
+  border-radius: var(--kn-radius-lg);
+  padding: var(--kn-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--kn-space-3);
+  box-shadow: var(--kn-shadow-lg), 0 0 48px rgba(168, 85, 247, 0.18);
+  animation: kn-slide-up 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.import-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kn-space-3);
+}
+
+.import-modal__title {
+  margin: 0;
+  font-size: var(--kn-fs-md);
+  font-weight: 700;
+  color: var(--kn-text);
+  letter-spacing: 0.02em;
+}
+
+.import-modal__close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(236, 230, 255, 0.06);
+  color: var(--kn-text-muted);
+  border: 0;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--kn-t-fast), color var(--kn-t-fast);
+}
+
+.import-modal__close:hover {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--kn-danger);
+}
+
+.import-modal__textarea {
+  width: 100%;
+  min-height: 140px;
+  max-height: 320px;
+  padding: var(--kn-space-3) var(--kn-space-4);
+  border-radius: var(--kn-radius-md);
+  background: rgba(10, 6, 18, 0.7);
+  border: 1px solid var(--kn-panel-border);
+  color: var(--kn-text);
+  font-family: var(--kn-font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--kn-t-fast), box-shadow var(--kn-t-fast);
+}
+
+.import-modal__textarea:focus-visible {
+  border-color: var(--kn-panel-border-strong);
+  box-shadow: var(--kn-glow-sm);
+}
+
+.import-modal__textarea::placeholder {
+  color: var(--kn-text-dim);
+}
+
+.import-modal__error {
+  font-size: var(--kn-fs-xs);
+  color: var(--kn-danger);
+  padding: 4px 0;
+  animation: kn-shake-x 320ms ease both;
+}
+
+.import-modal__actions {
+  display: flex;
+  gap: var(--kn-space-2);
+  justify-content: flex-end;
+  margin-top: var(--kn-space-2);
+}
+
+.import-modal__cancel,
+.import-modal__apply {
+  padding: var(--kn-space-2) var(--kn-space-5);
+  border-radius: var(--kn-radius-pill);
+  font-size: var(--kn-fs-sm);
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: filter var(--kn-t-fast), transform var(--kn-t-fast);
+}
+
+.import-modal__cancel {
+  background: rgba(236, 230, 255, 0.06);
+  color: var(--kn-text-muted);
+  border: 1px solid rgba(236, 230, 255, 0.12);
+}
+
+.import-modal__cancel:hover {
+  color: var(--kn-text);
+  background: rgba(236, 230, 255, 0.1);
+}
+
+.import-modal__apply {
+  background: var(--kn-accent);
+  color: #fff;
+  box-shadow: var(--kn-glow-sm);
+}
+
+.import-modal__apply:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.import-modal__apply:active {
+  transform: scale(0.97);
+}

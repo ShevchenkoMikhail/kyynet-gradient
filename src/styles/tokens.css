@@ -1,0 +1,104 @@
+:root {
+  /* ===== Palette ===== */
+  --kn-bg: #0d0819;
+  --kn-bg-elev-1: #140d26;
+  --kn-bg-elev-2: #1c1332;
+  --kn-bg-elev-3: #261a44;
+  --kn-panel: rgba(20, 13, 38, 0.75);
+  --kn-panel-border: rgba(168, 85, 247, 0.18);
+  --kn-panel-border-strong: rgba(168, 85, 247, 0.4);
+
+  --kn-accent: #a855f7;
+  --kn-accent-2: #7c3aed;
+  --kn-accent-soft: #c084fc;
+  --kn-accent-glow: rgba(168, 85, 247, 0.45);
+  --kn-accent-glow-soft: rgba(168, 85, 247, 0.2);
+
+  --kn-text: #ece6ff;
+  --kn-text-muted: #a89fc7;
+  --kn-text-dim: #6b607f;
+
+  --kn-success: #4ade80;
+  --kn-success-soft: rgba(74, 222, 128, 0.18);
+  --kn-warning: #fbbf24;
+  --kn-danger: #f87171;
+
+  /* ===== Minecraft chat panel ===== */
+  --mc-chat-bg: rgba(0, 0, 0, 0.55);
+  --mc-chat-bg-opaque: #0a0612;
+  --mc-text-default: #ffffff;
+
+  /* ===== Radii ===== */
+  --kn-radius-xs: 4px;
+  --kn-radius-sm: 6px;
+  --kn-radius-md: 10px;
+  --kn-radius-lg: 14px;
+  --kn-radius-xl: 20px;
+  --kn-radius-pill: 999px;
+
+  /* ===== Shadows / Glows ===== */
+  --kn-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --kn-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --kn-shadow-lg: 0 10px 32px rgba(0, 0, 0, 0.5);
+  --kn-glow-sm: 0 0 10px var(--kn-accent-glow-soft);
+  --kn-glow-md: 0 0 18px var(--kn-accent-glow);
+  --kn-glow-lg: 0 0 32px var(--kn-accent-glow);
+  --kn-glow-inset: inset 0 0 0 1px var(--kn-panel-border);
+
+  /* ===== Spacing ===== */
+  --kn-space-1: 4px;
+  --kn-space-2: 8px;
+  --kn-space-3: 12px;
+  --kn-space-4: 16px;
+  --kn-space-5: 20px;
+  --kn-space-6: 24px;
+  --kn-space-7: 32px;
+  --kn-space-8: 40px;
+  --kn-space-9: 56px;
+  --kn-space-10: 72px;
+
+  /* ===== Fonts ===== */
+  --kn-font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --kn-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+  --kn-font-mc: 'Monocraft', 'Fira Code', Consolas, monospace;
+
+  /* ===== Typographic scale ===== */
+  --kn-fs-xs: 11px;
+  --kn-fs-sm: 13px;
+  --kn-fs-base: 15px;
+  --kn-fs-md: 17px;
+  --kn-fs-lg: 20px;
+  --kn-fs-xl: 26px;
+  --kn-fs-2xl: 34px;
+  --kn-fs-3xl: 44px;
+
+  /* ===== Transitions ===== */
+  --kn-t-fast: 120ms ease;
+  --kn-t-med: 220ms ease;
+  --kn-t-slow: 360ms ease;
+
+  /* ===== z-index ===== */
+  --kn-z-toast: 1000;
+  --kn-z-confetti: 1100;
+  --kn-z-popover: 1200;
+}
+
+/* ===== Minecraft 16 legacy colors (exact hex from wiki) ===== */
+:root {
+  --mc-0: #000000;
+  --mc-1: #0000aa;
+  --mc-2: #00aa00;
+  --mc-3: #00aaaa;
+  --mc-4: #aa0000;
+  --mc-5: #aa00aa;
+  --mc-6: #ffaa00;
+  --mc-7: #aaaaaa;
+  --mc-8: #555555;
+  --mc-9: #5555ff;
+  --mc-a: #55ff55;
+  --mc-b: #55ffff;
+  --mc-c: #ff5555;
+  --mc-d: #ff55ff;
+  --mc-e: #ffff55;
+  --mc-f: #ffffff;
+}

@@ -1,0 +1,57 @@
+.palette {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--kn-space-2);
+}
+
+.palette__swatch {
+  --swatch-size: 36px;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: var(--swatch-size);
+  border-radius: var(--kn-radius-sm);
+  background: var(--swatch-c);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: var(--kn-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  transition: transform var(--kn-t-fast), box-shadow var(--kn-t-fast);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.palette__swatch[data-light="true"] {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.palette__swatch[data-light="false"] {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.palette__swatch:hover,
+.palette__swatch:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px var(--swatch-c), 0 4px 12px rgba(0, 0, 0, 0.35);
+  outline: none;
+}
+
+.palette__swatch:active {
+  transform: translateY(0) scale(0.96);
+}
+
+@media (max-width: 520px) {
+  .palette {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+  }
+  .palette__swatch {
+    --swatch-size: 40px;
+  }
+}
