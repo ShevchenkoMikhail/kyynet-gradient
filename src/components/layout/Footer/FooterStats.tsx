@@ -4,8 +4,6 @@ import { useCounter } from '../../../state/useCounter'
 import { useT, type AppLang, type DictKey } from '../../../i18n'
 import './FooterStats.css'
 
-const SESSION_VISITED_KEY = 'kyynet-gradient:visits-counted'
-
 function formatNumber(n: number, lang: AppLang): string {
   const formatter = new Intl.NumberFormat(lang === 'ru' ? 'ru-RU' : 'en-US')
   return formatter.format(Math.max(0, Math.floor(n)))
@@ -47,15 +45,11 @@ export function FooterStats() {
   const gradients = useCounter('gradients')
   const copies = useCounter('copies')
 
-  // On mount: hit visits once per session, read others (non-incrementing)
+  // On every page load, increment visits counter by one.
+  // Gradients and copies are action-driven (incremented when user clicks),
+  // so we just read their current values here.
   useEffect(() => {
-    const alreadyVisited = sessionStorage.getItem(SESSION_VISITED_KEY) === '1'
-    if (alreadyVisited) {
-      void counterService.read('visits')
-    } else {
-      void counterService.hit('visits')
-      sessionStorage.setItem(SESSION_VISITED_KEY, '1')
-    }
+    void counterService.hit('visits')
     void counterService.read('gradients')
     void counterService.read('copies')
   }, [])

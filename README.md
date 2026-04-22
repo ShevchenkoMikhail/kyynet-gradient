@@ -2,11 +2,11 @@
 
 **Визуальный редактор форматированного текста для Minecraft.** Первый сервис экосистемы KyyNet Toolkit.
 
-[🇷🇺 Russian](#russian) · [🇬🇧 English](#english)
+Живёт на [gradient.kyynet.net](https://gradient.kyynet.net/) · часть [kyynet.net](https://kyynet.net)
 
 ---
 
-## <a id="russian"></a>🇷🇺 Что это
+## Что это
 
 Веб-приложение, в котором администратор сервера Minecraft или разработчик плагинов за несколько кликов собирает красивое цветное и форматированное сообщение (приветствие EssentialsX, лор предмета, MOTD, объявление в чат) **без** запоминания 16 legacy-цветов, hex-значений и путаницы между Legacy / Hex / MiniMessage.
 
@@ -15,63 +15,31 @@
 | Фича | Описание |
 |------|---------|
 | **Three-format output** | Одновременно Legacy (`&aHi`), Hex (`&#ff5555Hi`), MiniMessage (`<color:#ff5555>Hi</color>`) |
-| **Multi-stop gradients** | Градиент из 2–6 точек с перетягиванием, не только «от и до» |
-| **12 пресетов градиентов** | Закат, Океан, Vaporwave, Огонь, Лес, Радуга, Галактика и т. д. — клик и применить |
+| **Multi-stop gradients** | 2–6 точек с перетягиванием, 12 пресетов (Закат, Океан, Vaporwave, Радуга, Галактика…) |
 | **Selection-based formatting** | Выделил «мир» → нажал красный → только «мир» краснеет. Текст остаётся чистым. |
-| **Live preview** | Minecraft chat-панель с пиксельным шрифтом Monocraft и классической игровой drop-shadow |
-| **9 сцен превью** | Оригинал (фиолетовый) / трава / песчаник / небо / ночь / белый / серый / тёмно-серый / чёрный — видно как текст смотрится на разных фонах |
-| **Import** | Вставьте существующий `&aHi`, `§aHi` или `<color:#ff0000>Hi</color>` → распарсится в редактируемый документ |
-| **Share URL** | Документ кодируется в `location.hash` — отправил ссылку = отправил готовое сообщение |
+| **Live preview** | Minecraft chat-панель с пиксельным шрифтом Monocraft и классической drop-shadow |
+| **9 сцен превью** | Оригинал (фиолет) / трава / песчаник / небо / ночь / белый / серый / тёмно-серый / чёрный |
+| **Import** | Вставьте существующий `&aHi` или `<color:#ff0000>Hi</color>` → распарсится в редактируемый документ. Градиенты загружаются прямо в полоску редактора. |
+| **Share URL** | Документ кодируется в URL — отправил ссылку = отправил готовое сообщение |
 | **Undo / Redo** | Ctrl+Z / Ctrl+Shift+Z, глубина 60 |
-| **Bilingual** | RU / EN с мгновенным переключением, запоминается |
-| **Счётчик посещений** | Глобальный (через counterapi.dev) с graceful fallback на localStorage |
-| **Visual extras** | Пиксельная анимация заголовка, жидкий фиолетово-зелёный фон, конфетти при копировании |
+| **Bilingual** | RU / EN с мгновенным переключением |
+| **Счётчики использования** | Три глобальных: посещения, градиенты применено, текстов скопировано |
+| **Visual extras** | Анимированный hero, жидкий фон, конфетти при копировании |
 
-### Быстрый старт (разработка)
+---
 
-```bash
-git clone https://github.com/<user>/kyynet-gradient.git
-cd kyynet-gradient
-npm install
-npm run dev                  # dev-сервер на http://localhost:5173
-```
-
-Другие команды:
-
-```bash
-npm run build         # production-сборка в dist/
-npm run preview       # локальный preview собранной версии
-npm run typecheck     # tsc --noEmit
-npm run test          # vitest (96+ юнит-тестов)
-npm run lint          # eslint
-```
-
-### Деплой на сервер
-
-**Это полностью статический сайт.** После `npm run build` папка `dist/` содержит всё необходимое:
-
-```
-dist/
-├── index.html
-├── assets/
-│   ├── index-<hash>.js
-│   └── style-<hash>.css
-├── fonts/Monocraft.ttf
-└── favicon.svg
-```
-
-Вариант 1 — **своим сервером (Nginx / Caddy)**:
+## 🚀 Деплой на сервер (2 минуты)
 
 ```bash
 # на сервере:
-git clone https://github.com/<user>/kyynet-gradient.git
+cd /var/www
+git clone https://github.com/ShevchenkoMikhail/kyynet-gradient.git
 cd kyynet-gradient
-npm ci                       # или npm install
-npm run build                # создаёт dist/
-# настройте Nginx/Caddy на обслуживание dist/ как статического сайта
+npm ci
+npm run build
 ```
 
-Минимальная конфигурация **Nginx** (SPA-совместимая):
+В папке `dist/` лежит готовый статический сайт. Настройте Nginx:
 
 ```nginx
 server {
@@ -82,203 +50,172 @@ server {
     location / {
         try_files $uri $uri/ /index.html;
     }
-
-    location ~* \.(js|css|woff2?|ttf|svg)$ {
-        expires 30d;
-        add_header Cache-Control "public, immutable";
-    }
 }
 ```
 
-**Caddy** (ещё проще):
+Или ещё проще — Caddy (сам получит Let's Encrypt сертификат):
 
 ```
 gradient.kyynet.net {
     root * /var/www/kyynet-gradient/dist
     file_server
-    try_files {path} {path}/ /index.html
+    try_files {path} /index.html
 }
 ```
 
-Вариант 2 — **Cloudflare Pages / Netlify / Vercel**:
+**Всё. Домен `gradient.kyynet.net` уже вшит во все нужные места (meta-теги, sitemap, canonical) — ничего вручную менять не нужно.**
 
-1. Подключить GitHub-репозиторий.
-2. Build command: `npm run build`
-3. Output directory: `dist`
-4. Готово — деплой автоматически при push в main.
-
-### SEO и социальные превью
-
-Уже встроено:
-
-- Title, description, keywords на русском с прицелом на целевую аудиторию (MC-админы)
-- Open Graph + Twitter Card (og:image → `/og-image.svg`)
-- `<html lang="ru">` + `hreflang` для RU/EN
-- Schema.org `WebApplication` (structured data) — помогает гугл-карточке
-- `robots.txt` + `sitemap.xml`
-- `manifest.webmanifest` — можно «добавить на главный экран» на мобилке
-
-**На продакшне замените `https://gradient.kyynet.net/` на свой реальный домен** в:
-- `index.html` — канонические ссылки + og:url + структурированные данные
-- `public/robots.txt` — ссылка на sitemap
-- `public/sitemap.xml` — все `<loc>` и `hreflang`-теги
-
-**OG-превью**: по умолчанию используется `og-image.svg`. Facebook, WhatsApp и Telegram **не рендерят SVG** для предпросмотров (Discord и Slack рендерят). Если важны именно первые три платформы — сгенерируйте PNG:
+### Обновление после изменений в репо
 
 ```bash
-# любым конвертером, например ImageMagick:
-magick public/og-image.svg -resize 1200x630 public/og-image.png
-
-# затем в index.html замените og-image.svg → og-image.png и типы на image/png
+cd /var/www/kyynet-gradient
+git pull
+npm ci
+npm run build
 ```
 
-### Счётчики использования
+(Nginx/Caddy просто пересечёт статические файлы, никакой рестарт не нужен.)
 
-В футере показываются три глобальных счётчика:
+---
 
-- **Посещения** — инкрементируется один раз на вкладку сессии (хранится в sessionStorage)
-- **Градиентов применено** — каждый клик «Применить к тексту»
-- **Текстов скопировано** — каждый успешный `navigator.clipboard.writeText` из OutputCard
+## 🛠 Локальная разработка
 
-Все три используют один публичный бесплатный API — `abacus.jasoncameron.dev` (namespace: `kyynet-gradient`). Никакой регистрации, никакого бэкенда. Последние значения кэшируются в `localStorage`, чтобы UI показывал цифры мгновенно на повторных визитах.
+```bash
+git clone https://github.com/ShevchenkoMikhail/kyynet-gradient.git
+cd kyynet-gradient
+npm install
+npm run dev             # http://localhost:5173
+```
 
-Свой бэкенд: подмените URL в `src/utils/counterService.ts` (`BASE_URL` + `NAMESPACE`). Ожидается `{ "value": N }` JSON-ответ.
+Другие команды:
 
-### Что дополнительно настроить на сервере?
+```bash
+npm run build           # production-сборка в dist/
+npm run preview         # локальный preview собранной версии
+npm run typecheck       # tsc --noEmit
+npm run test            # vitest (100+ юнит-тестов)
+npm run lint            # eslint
+```
 
-**Ничего обязательного.** Проект самодостаточен. Но опционально:
+---
 
-1. **Замена placeholder-ссылок** в [src/constants/links.ts](src/constants/links.ts) — сейчас это заглушки на `kyynet.net/about`, `/contacts`, `/privacy`. Можно указать рабочие.
-2. **Свой счётчик посещений**. По умолчанию используется `api.counterapi.dev/v1/kyynet-gradient/visits` (бесплатный сервис, 1000 req/day). Если хочется свой:
-   - Подмените URL в [src/components/layout/Footer/VisitCounter.tsx](src/components/layout/Footer/VisitCounter.tsx) — `COUNTER_URL`
-   - Или поднимите простой endpoint на бэкенде, возвращающий `{ "count": N }`
-3. **Шрифт Monocraft → WOFF2**. Сейчас в `public/fonts/` лежит `.ttf` (210 KB). Конвертация в `.woff2` сжимает ~40%. Обновите `src/fonts/minecraft.css` и `index.html` preload.
-4. **Брендинг**. Имя сервиса — в [src/constants/brand.ts](src/constants/brand.ts) (`SERVICE_NAME`). Дизайн-токены (цвета, шрифты, тени) — в [src/styles/tokens.css](src/styles/tokens.css) — единая точка для всего семейства KyyNet.
+## 📊 Счётчики использования
 
-### Стек
+В футере три глобальных счётчика:
+
+- **👁 Посещения** — инкрементируется на каждый заход на страницу
+- **✨ Градиентов применено** — каждый клик «Применить к тексту»
+- **📋 Текстов скопировано** — каждое успешное копирование результата
+
+Бэкенд — бесплатный публичный сервис `abacus.jasoncameron.dev` (namespace: `kyynet-gradient`). Ничего настраивать не надо — работает само. Последние значения кэшируются в `localStorage`, чтобы UI показывал цифры мгновенно при повторных заходах.
+
+---
+
+## Стек
 
 | Слой | Выбор |
 |---|---|
 | UI | React 18 + strict mode |
-| Сборка | Vite 5 + `@vitejs/plugin-react` |
+| Сборка | Vite 5 |
 | Язык | TypeScript 5 |
-| CSS | Плоские `.css` файлы + дизайн-токены (CSS custom properties). Нет Tailwind, нет CSS-in-JS. |
-| Шрифт | Monocraft (OFL 1.1, кириллица, self-hosted) |
-| Внешние пакеты | `react-colorful` (цветопикер) · `canvas-confetti` (конфетти) · `react-i18next` + `i18next` (локализация) |
-| Тесты | `vitest` + `@testing-library/react` + `playwright` |
+| CSS | Плоские `.css` файлы + дизайн-токены. Нет Tailwind, нет CSS-in-JS. |
+| Шрифт | Monocraft (OFL 1.1, self-hosted) |
+| Runtime deps | `react`, `react-dom`, `react-colorful`, `canvas-confetti`, `react-i18next`, `i18next` — 6 штук |
 
-**Итого рантайм-зависимостей: 6** (`react`, `react-dom`, `react-colorful`, `canvas-confetti`, `i18next`, `react-i18next`).
+Production bundle: **~95 KB gzipped**.
 
-### Структура проекта
+---
+
+## Структура проекта
 
 ```
 src/
 ├── engine/                   # Чистые функции, без UI. Ядро инструмента.
 │   ├── types.ts              # Segment, GradientStop, StyleFlags
 │   ├── parser.ts             # rawText (&-codes) → Segment[]
-│   ├── import.ts             # MiniMessage/Legacy/Hex → Segment[]
+│   ├── import.ts             # MiniMessage/Legacy/Hex → Segment[] + gradients
 │   ├── encoders/
 │   │   ├── legacy.ts         # Segment[] → "&aПривет"
 │   │   ├── hex.ts            # Segment[] → "&#ff5555Привет"
-│   │   ├── miniMessage.ts    # Segment[] → "<color:#ff5555>Привет</color>"
-│   │   └── index.ts          # encodeAll() — вызывает все три
+│   │   ├── miniMessage.ts    # Segment[] → "<color:#...>Привет</color>"
+│   │   └── index.ts          # encodeAll() — все три сразу
 │   ├── gradient/
-│   │   ├── interpolate.ts    # sRGB линейная интерполяция multi-stop
+│   │   ├── interpolate.ts    # sRGB multi-stop interpolation
 │   │   ├── apply.ts          # Wrap selection with gradient markers
-│   │   ├── flatten.ts        # Развернуть §{g1}...§{/g1} в per-char hex
+│   │   ├── flatten.ts        # Развернуть §{g1} в per-char hex
 │   │   └── presets.ts        # 12 готовых градиентов
 │   └── minecraft/
 │       ├── legacyPalette.ts  # 16 канонических MC-цветов + nearest-match
 │       └── styleCodes.ts     # l/o/n/m/k/r ↔ StyleFlags
 │
 ├── state/                    # React-хуки
-│   ├── useFormatDoc.ts       # Главный state: segments, gradients, outputs + undo/redo + persistence
-│   ├── useUndoable.ts        # Универсальный undo-stack
+│   ├── useFormatDoc.ts       # Главное состояние: segments, gradients, undo/redo
+│   ├── useUndoable.ts        # История past/present/future
 │   ├── usePersistentState.ts # localStorage-wrapped useState
-│   └── useCopyFeedback.ts    # Копирование + тост + конфетти
+│   ├── useCopyFeedback.ts    # Copy + toast + confetti + counter
+│   └── useCounter.ts         # Subscribe к глобальному счётчику
 │
 ├── components/
-│   ├── layout/               # Header / Intro / Footer / LanguageSwitcher / VisitCounter
-│   ├── preview/              # Preview panel + per-char rendering + obfuscated animation + scene switcher
-│   ├── editor/               # TextInput, ColorPalette, StyleToolbar, HexPicker, GradientBuilder, ImportModal
+│   ├── layout/               # Header / Intro / Footer / FooterStats / LanguageSwitcher
+│   ├── preview/              # Preview + RenderedLine + 9 сцен + obfuscated animation
+│   ├── editor/               # TextInput, ColorPalette, StyleToolbar, HexPicker,
+│   │                         # GradientBuilder, ImportModal
 │   ├── output/               # OutputPanel / OutputCard / CopyButton
 │   └── feedback/             # ToastHost / ConfettiHost / LiquidBackground
 │
-├── i18n/                     # i18next init + RU/EN dictionaries + typed useT() hook
-├── utils/                    # Color math, cursor insert, clipboard, share (URL hash encode/decode)
+├── i18n/                     # i18next + RU/EN dictionaries + typed useT()
+├── utils/                    # color, cursor, clipboard, share (URL hash), counterService
 ├── constants/                # brand.ts, links.ts, defaults.ts
 ├── styles/                   # tokens.css, global.css, reset.css, animations.css
 └── fonts/                    # minecraft.css @font-face
 
-tests/
-└── engine/                   # 96 юнит-тестов для парсера, энкодеров, градиента, импорта
-
 public/
-└── fonts/Monocraft.ttf       # Self-hosted pixel-шрифт для превью
+├── fonts/Monocraft.ttf       # Pixel-шрифт для превью
+├── favicon.svg               # Иконка во вкладке
+├── og-image.svg              # Превью для соцсетей
+├── robots.txt                # Для поисковиков
+├── sitemap.xml               # Sitemap для Google
+└── manifest.webmanifest      # PWA-метаданные (можно «добавить на экран»)
+
+tests/engine/                 # 100 unit-тестов для парсера/энкодеров/импорта
 ```
-
-### Архитектурные решения (для ИИ и разработчиков)
-
-1. **Non-destructive formatting model**. Текст и форматирование хранятся раздельно. Источник истины — `Segment[]`, где каждый символ знает свои `color`, `styles`, `gradientId`. Пользователь видит plain-текст в textarea; форматирование применяется к ВЫДЕЛЕНИЮ. Это решает проблему прошлого дизайна, где вставка `&a` в позицию курсора ломала текст.
-
-2. **Three independent encoders**. `parser` → `Segment[]` → три независимых энкодера (Legacy / Hex / MiniMessage). Каждый энкодер — чистая функция, юнит-тестируемая отдельно. Добавление нового формата (например, JSON text component для `/tellraw`) = один новый файл в `engine/encoders/`.
-
-3. **Portal-rendered popovers**. Gradient-стоп попап и Import-модалка рендерятся в `document.body` через `createPortal`, чтобы избегать z-index-ловушек stacking-контекстов (backdrop-filter в родителях).
-
-4. **Design tokens**. Все цвета, радиусы, тени, шрифты — в [src/styles/tokens.css](src/styles/tokens.css) как CSS custom properties. Будущие сиблинги KyyNet Toolkit просто подгрузят свой токен-файл — визуальная семья сохранится без правок компонентов.
-
-5. **URL hash persistence**. Полный документ кодируется в `location.hash` через run-length encoding + bitfield для стилей + base64. Для «Привет мир!» с градиентом = ~240 байт. Делитесь = отправляете саму запись.
-
-6. **Offline-first + опциональный бэкенд**. Всё работает локально (localStorage). Счётчик посещений использует внешний бесплатный сервис с graceful fallback.
-
-### Верификация
-
-```bash
-npm run typecheck     # ✅ clean
-npm run test          # ✅ 96 passed
-npm run build         # ✅ ~94 KB gzipped (39 KB CSS + 267 KB JS)
-```
-
-**Lighthouse** (локально, desktop): Performance 95+ · Accessibility 95+ · Best Practices 100 · SEO 100.
-
-### Лицензия
-
-MIT — см. [LICENSE](LICENSE).
-
-Шрифт **Monocraft** использован по лицензии SIL Open Font License 1.1 (автор: IdreesInc).
-
-### Часть KyyNet
-
-Этот проект — первый в планируемой серии инструментов **KyyNet Toolkit**. Играйте на сервере: [play.kyynet.net](https://play.kyynet.net) · Основной сайт: [kyynet.net](https://kyynet.net).
 
 ---
 
-## <a id="english"></a>🇬🇧 English (brief)
+## Архитектурные решения (для разработчиков и ИИ-ассистентов)
 
-**KyyNet Gradient** is a visual editor for Minecraft formatted text. Target audience: MC server admins and plugin developers who want to craft colored/styled messages without memorizing 16 legacy colors, juggling three different syntaxes (Legacy, Hex, MiniMessage), or editing raw codes.
+1. **Non-destructive formatting model.** Текст и форматирование хранятся раздельно. Источник истины — `Segment[]`, каждый символ знает `color`, `styles`, `gradientId`. В textarea только чистый текст, форматирование применяется к выделению.
 
-**Highlights:**
+2. **Three independent encoders.** `parser` → `Segment[]` → три энкодера (Legacy/Hex/MiniMessage). Каждый — чистая функция, тестируется отдельно. Добавить новый формат (например, `/tellraw` JSON) = один файл.
 
-- Non-destructive formatting (plain text + selection-based apply)
-- 12 gradient presets + custom multi-stop gradient builder
-- 3 output formats simultaneously with one-click copy
-- Import existing coded strings (Legacy / Hex / MiniMessage with `<gradient>` expansion)
-- Share URL encodes the entire document in the hash
-- Undo / Redo (Ctrl+Z)
-- Bilingual RU / EN with instant toggle
-- Live Minecraft preview with pixel font, drop-shadow, obfuscated animation
-- 9 preview scene backgrounds (original purple / grass / sandstone / sky / night / white / gray / dark gray / black)
-- Animated purple hero title with rainbow metallic letters
-- Confetti on copy
+3. **Portal-rendered popovers.** Gradient stop popover и Import modal рендерятся в `document.body` через `createPortal`, чтобы обойти z-index ловушки от `backdrop-filter` в родителях.
 
-**Tech**: React 18 + Vite + TypeScript, native CSS (no Tailwind), minimal runtime dependencies (`react-colorful`, `canvas-confetti`, `react-i18next`).
+4. **Design tokens.** Все цвета, радиусы, тени, шрифты — в `src/styles/tokens.css` как CSS custom properties. Будущие сиблинги KyyNet Toolkit переопределяют токены — семья сохранится без правок компонентов.
 
-**Build**: `npm run build` → static `dist/` folder. Deploy anywhere that serves static HTML: Nginx, Caddy, Cloudflare Pages, Netlify, Vercel, GitHub Pages.
+5. **URL hash persistence.** Весь документ кодируется в `location.hash` через run-length encoding + bitfield для стилей + base64. Делитесь ссылкой = делитесь готовой записью.
 
-No server-side logic required. All state persists in `localStorage` + `location.hash`.
+6. **Offline-first + опциональный бэкенд.** Всё работает локально (localStorage). Счётчики используют внешний бесплатный API с graceful fallback на кэш.
 
-See Russian section above for detailed architecture and deployment notes.
+7. **Segment-first import.** `importFromCode(str)` возвращает `{ segments, gradients, lastGradientStops }`. Импортированный градиент загружается в редактор-полоску через `GradientBuilderHandle.loadStops` (forwardRef + useImperativeHandle).
 
-### License
+---
 
-MIT. Monocraft font under SIL OFL 1.1 (© IdreesInc).
+## Верификация
+
+```bash
+npm run typecheck       # ✅ clean
+npm run test            # ✅ 100 passed
+npm run build           # ✅ ~95 KB gzipped
+```
+
+---
+
+## Лицензия
+
+MIT — см. [LICENSE](LICENSE). Шрифт Monocraft по лицензии SIL OFL 1.1 (© IdreesInc).
+
+---
+
+## Часть KyyNet
+
+Основной сайт: [kyynet.net](https://kyynet.net) · Играйте на Minecraft-сервере: **[play.kyynet.net](https://play.kyynet.net)**
