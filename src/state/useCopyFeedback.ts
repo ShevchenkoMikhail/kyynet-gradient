@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { copyToClipboard } from '../utils/clipboard'
 import { toastBus, fireFromRect } from '../components/feedback/bus'
+import { counterService } from '../utils/counterService'
 import { useT } from '../i18n'
 
 export function useCopyFeedback() {
@@ -14,6 +15,8 @@ export function useCopyFeedback() {
         if (sourceEl) {
           fireFromRect(sourceEl.getBoundingClientRect())
         }
+        // Global-usage metric — fire and forget
+        void counterService.hit('copies')
       } else {
         toastBus.push(t('output.copyFailed'), 'error')
       }

@@ -1,7 +1,7 @@
 import { LINKS } from '../../../constants/links'
 import { PARENT_PROJECT } from '../../../constants/brand'
 import { useT } from '../../../i18n'
-import { VisitCounter } from './VisitCounter'
+import { FooterStats } from './FooterStats'
 import './Footer.css'
 
 const SOCIAL_ICONS: Array<{ href: string; label: string; path: string }> = [
@@ -172,11 +172,12 @@ export function Footer() {
         </section>
       </div>
 
+      <FooterStats />
+
       <div className="footer__bottom">
         <span className="footer__copyright">
           {t('footer.copyright', { year })}
         </span>
-        <VisitCounter />
       </div>
     </footer>
   )

@@ -1,16 +1,102 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0d0819" />
-    <link rel="preload" href="/fonts/Monocraft.ttf" as="font" type="font/ttf" crossorigin />
-    <title>KyyNet Gradient</title>
+
+    <!-- Primary SEO -->
+    <title>KyyNet Gradient — редактор градиентов и форматированного текста для Minecraft</title>
+    <meta
+      name="description"
+      content="Визуальный редактор градиентов и цветов для Minecraft. Собирайте MOTD, лоры предметов, приветствия и объявления в три клика. Legacy, Hex и MiniMessage в одном инструменте."
+    />
+    <meta
+      name="keywords"
+      content="minecraft, gradient, майнкрафт, редактор градиентов, цветной текст, MOTD, EssentialsX, MiniMessage, Paper, Velocity, chat formatter, KyyNet"
+    />
+    <meta name="author" content="KyyNet" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://gradient.kyynet.net/" />
+    <link rel="alternate" hreflang="ru" href="https://gradient.kyynet.net/" />
+    <link rel="alternate" hreflang="en" href="https://gradient.kyynet.net/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://gradient.kyynet.net/" />
+
+    <!-- Favicons / icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="KyyNet Gradient" />
+    <meta property="og:title" content="KyyNet Gradient — редактор градиентов для Minecraft" />
+    <meta
+      property="og:description"
+      content="Визуальный редактор градиентов и форматированного текста для Minecraft. Legacy, Hex, MiniMessage в одном окне. Мгновенное превью, импорт существующих кодов, общие пресеты."
+    />
+    <meta property="og:url" content="https://gradient.kyynet.net/" />
+    <meta property="og:image" content="https://gradient.kyynet.net/og-image.svg" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="KyyNet Gradient — Minecraft text formatter" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KyyNet Gradient" />
+    <meta
+      name="twitter:description"
+      content="Визуальный редактор градиентов и форматированного текста для Minecraft."
+    />
+    <meta name="twitter:image" content="https://gradient.kyynet.net/og-image.svg" />
+
+    <!-- Structured data: WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "KyyNet Gradient",
+        "url": "https://gradient.kyynet.net/",
+        "description": "Visual editor for Minecraft formatted text: colors, gradients and styles across Legacy, Hex and MiniMessage formats.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Modern browser.",
+        "isAccessibleForFree": true,
+        "inLanguage": ["ru", "en"],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "KyyNet",
+          "url": "https://kyynet.net/"
+        }
+      }
+    </script>
+
+    <link
+      rel="preload"
+      href="/fonts/Monocraft.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="padding: 24px; color: #ece6ff; font-family: system-ui, sans-serif;">
+        Для работы KyyNet Gradient нужен включённый JavaScript.
+        <br />
+        KyyNet Gradient requires JavaScript to run.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "name": "KyyNet Gradient",
+  "short_name": "KyyNet Gradient",
+  "description": "Визуальный редактор градиентов и форматированного текста для Minecraft",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0d0819",
+  "background_color": "#0d0819",
+  "lang": "ru",
+  "categories": ["productivity", "utilities", "games"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

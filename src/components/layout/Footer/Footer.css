@@ -200,9 +200,8 @@
   margin: 0 auto;
   width: 100%;
   padding-top: var(--kn-space-4);
-  border-top: 1px solid rgba(236, 230, 255, 0.06);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: var(--kn-space-4);
   flex-wrap: wrap;

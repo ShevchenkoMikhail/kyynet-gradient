@@ -7,6 +7,7 @@ import { colorsForN } from '../engine/gradient/interpolate'
 import { takeNextGradientIdFromExisting } from '../engine/gradient/apply'
 import { PERSIST_KEY } from '../constants/defaults'
 import { decodeDocFromHash, encodeDocToHash } from '../utils/share'
+import { counterService } from '../utils/counterService'
 
 type PersistedDoc = {
   segments: Segment[]
@@ -176,6 +177,8 @@ export function useFormatDoc() {
     (start: number, end: number, stops: Gradient['stops']) => {
       const n = end - start
       if (n <= 0 || stops.length < 2) return
+      // Best-effort global-usage metric — fire and forget
+      void counterService.hit('gradients')
       history.set(prev => {
         const gid = takeNextGradientIdFromExisting(prev.gradients)
         const segs = prev.segments

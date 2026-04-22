@@ -107,6 +107,43 @@ gradient.kyynet.net {
 3. Output directory: `dist`
 4. Готово — деплой автоматически при push в main.
 
+### SEO и социальные превью
+
+Уже встроено:
+
+- Title, description, keywords на русском с прицелом на целевую аудиторию (MC-админы)
+- Open Graph + Twitter Card (og:image → `/og-image.svg`)
+- `<html lang="ru">` + `hreflang` для RU/EN
+- Schema.org `WebApplication` (structured data) — помогает гугл-карточке
+- `robots.txt` + `sitemap.xml`
+- `manifest.webmanifest` — можно «добавить на главный экран» на мобилке
+
+**На продакшне замените `https://gradient.kyynet.net/` на свой реальный домен** в:
+- `index.html` — канонические ссылки + og:url + структурированные данные
+- `public/robots.txt` — ссылка на sitemap
+- `public/sitemap.xml` — все `<loc>` и `hreflang`-теги
+
+**OG-превью**: по умолчанию используется `og-image.svg`. Facebook, WhatsApp и Telegram **не рендерят SVG** для предпросмотров (Discord и Slack рендерят). Если важны именно первые три платформы — сгенерируйте PNG:
+
+```bash
+# любым конвертером, например ImageMagick:
+magick public/og-image.svg -resize 1200x630 public/og-image.png
+
+# затем в index.html замените og-image.svg → og-image.png и типы на image/png
+```
+
+### Счётчики использования
+
+В футере показываются три глобальных счётчика:
+
+- **Посещения** — инкрементируется один раз на вкладку сессии (хранится в sessionStorage)
+- **Градиентов применено** — каждый клик «Применить к тексту»
+- **Текстов скопировано** — каждый успешный `navigator.clipboard.writeText` из OutputCard
+
+Все три используют один публичный бесплатный API — `abacus.jasoncameron.dev` (namespace: `kyynet-gradient`). Никакой регистрации, никакого бэкенда. Последние значения кэшируются в `localStorage`, чтобы UI показывал цифры мгновенно на повторных визитах.
+
+Свой бэкенд: подмените URL в `src/utils/counterService.ts` (`BASE_URL` + `NAMESPACE`). Ожидается `{ "value": N }` JSON-ответ.
+
 ### Что дополнительно настроить на сервере?
 
 **Ничего обязательного.** Проект самодостаточен. Но опционально:
