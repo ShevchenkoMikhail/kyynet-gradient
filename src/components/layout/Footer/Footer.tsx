@@ -137,16 +137,13 @@ export function Footer() {
             ))}
           </div>
         </section>
-
-        <section className="footer__col footer__col--counter">
-          <VisitCounter />
-        </section>
       </div>
 
       <div className="footer__bottom">
         <span className="footer__copyright">
           {t('footer.copyright', { year })}
         </span>
+        <VisitCounter />
       </div>
     </footer>
   )
